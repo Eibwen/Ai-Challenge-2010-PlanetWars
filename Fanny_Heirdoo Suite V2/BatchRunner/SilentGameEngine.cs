@@ -52,7 +52,7 @@ namespace BatchRunner
 					List<botDebugBase> players = new List<botDebugBase>();
 					players.Add(Player1);
 					players.Add(Player2);
-					ParallelQuery<botDebugBase> parallel = players.AsParallel();
+                    IQueryable<botDebugBase> parallel = players.AsQueryable<botDebugBase>();
 					int turnsLeft = MaxTurns;
 
 					// I looked at the original engine, which had a lot of overhead because it was working with application instances
@@ -69,7 +69,10 @@ namespace BatchRunner
 
 						players.ForEach(player => player.GameBoardData = engine.PovRepresentation(player.Id));
 
-						parallel.ForAll(PushGameDataToPlayer);
+                        foreach (botDebugBase player in parallel)
+                        {
+                            PushGameDataToPlayer(player);
+                        }
 
 						turnsLeft--;
 						if (Aborted)

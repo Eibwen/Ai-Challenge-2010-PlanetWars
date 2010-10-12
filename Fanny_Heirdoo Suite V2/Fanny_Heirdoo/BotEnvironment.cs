@@ -12,9 +12,10 @@ namespace FannyHeirdooBot
 		public static int MIN_SHIPS_AFTER_MOVE = 2;
 		public static int MIN_SHIPS_BEFORE_MOVE = 7;
 
-		public const string TRACE_PATH = "F:\\Development\\Google\\FANNY.txt";
-		public const string DUMP_MAPS = @"F:\Development\Google\Fanny_Heirdoo\Run\Maps\dumped";
-		public const string DUMP_PATH = @"F:\Development\Google\Fanny_Heirdoo\Run\FANNY_MOVES";
+        const string SOLUTION_PATH = @"D:\Projects\CSharp\!Personal\GoogleAIChallenge2010\Fanny_Heirdoo Suite V2\";
+        public const string TRACE_PATH = SOLUTION_PATH + "FANNY.txt";
+        public const string DUMP_MAPS = SOLUTION_PATH + @"Run\Maps\dumped";
+        public const string DUMP_PATH = SOLUTION_PATH + @"Run\FANNY_MOVES";
 
 		internal static void ClearTrace()
 		{

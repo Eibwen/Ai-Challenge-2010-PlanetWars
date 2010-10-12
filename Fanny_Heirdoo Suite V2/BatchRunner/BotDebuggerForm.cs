@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using System.Drawing;
 using PlanetDebug;
 using botDebug;
@@ -33,7 +32,7 @@ namespace BatchRunner
 		/// Expected solution path, contains maps.
 		/// This paths is also used as the base to launch the original engine on tab Two and Three.
 		/// </summary>
-		private static string solutionBase = @"F:\Development\Google\Fanny_Heirdoo\Run";
+        private static string solutionBase = @"D:\Projects\CSharp\!Personal\GoogleAIChallenge2010\Fanny_Heirdoo Suite V2\Run";
 
 		public string MapFolder
 		{
@@ -192,7 +191,7 @@ namespace BatchRunner
 
 		private void buttonDebugMove_Click(object sender, EventArgs e)
 		{
-			string debugMove = @"F:\Development\Google\Fanny_Heirdoo\Run\FANNY_MOVES\Turn145.txt";
+            string debugMove = @"D:\Projects\CSharp\!Personal\GoogleAIChallenge2010\Fanny_Heirdoo Suite V2\Run\FANNY_MOVES\Turn145.txt";
 			Start(debugMove);
 		}
 
@@ -226,7 +225,7 @@ namespace BatchRunner
 
 				//CalcTSM(cbOpponentOneOwnBot.Checked ? 1 : 2);
 				ForceRender();
-				ParallelQuery<botDebugBase> parallel = players.AsParallel();
+                IQueryable<botDebugBase> parallel = players.AsQueryable<botDebugBase>();
 				// I looked at the original engine, which had a lot of overhead because it was working with application instances
 				// and was capturing the output. Since I have a direct instance to the bot (wall, the debug wrapper) I can skip a lot of that
 				// and just use the bare essentials.
@@ -255,7 +254,10 @@ namespace BatchRunner
 
 					if (checkBoxParallel.Checked)
 					{
-						parallel.ForAll(PushGameDataToPlayer);
+                        foreach (botDebugBase player in parallel)
+                        {
+                            PushGameDataToPlayer(player);
+                        }
 					}
 					else
 					{

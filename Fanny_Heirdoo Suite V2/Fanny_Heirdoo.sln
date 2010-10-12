@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanny_Heirdoo", "Fanny_Heirdoo\Fanny_Heirdoo.csproj", "{A9B6F17D-7136-4AC2-B497-2AE1DB5A26BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FIles", "FIles", "{85155929-EB8B-4BEE-BC37-374C399B21C9}"
