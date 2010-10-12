@@ -1,0 +1,1 @@
+java.exe -jar tools\PlayGame.jar maps\map10.txt 1000000 1000000 log.txt "FANNY_HEIRDOO.exe"  "Ragebot.exe" | java.exe -jar tools\ShowGame.jar

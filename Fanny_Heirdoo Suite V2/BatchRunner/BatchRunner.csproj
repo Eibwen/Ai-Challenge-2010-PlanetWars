@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3124B795-57C5-4889-9FCF-8D6826508DDA}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BatchRunner</RootNamespace>
+    <AssemblyName>BatchRunner</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="ColorDictionary.cs" />
+    <Compile Include="ConsoleRedirect.cs" />
+    <Compile Include="Fleet.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="BotDebuggerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BotDebuggerForm.Designer.cs">
+      <DependentUpon>BotDebuggerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Planet.cs" />
+    <Compile Include="PorterClasses.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenderColor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Renderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SilentGameEngine.cs" />
+    <EmbeddedResource Include="BotDebuggerForm.resx">
+      <DependentUpon>BotDebuggerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\botDebug\botDebug.csproj">
+      <Project>{E6C870A6-681E-4868-9273-FF5B850A82A0}</Project>
+      <Name>botDebug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BullyBot\BullyBot.csproj">
+      <Project>{E5F2F37F-A8A1-4623-AC24-691BC08E6E0D}</Project>
+      <Name>BullyBot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DualBot\DualBot.csproj">
+      <Project>{6A621AD7-BC57-404D-BDC1-B41DFB73EBA7}</Project>
+      <Name>DualBot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanny_Heirdoo\Fanny_Heirdoo.csproj">
+      <Project>{A9B6F17D-7136-4AC2-B497-2AE1DB5A26BA}</Project>
+      <Name>Fanny_Heirdoo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProspectorBot\ProspectorBot.csproj">
+      <Project>{44ADD6B3-9493-4D14-9BB4-04679CE576FC}</Project>
+      <Name>ProspectorBot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RageBot\RageBot.csproj">
+      <Project>{BEE29280-D12B-4D8F-BC9E-50CDE4F7F326}</Project>
+      <Name>RageBot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RandomBot\RandomBot.csproj">
+      <Project>{3CA091FE-2148-4F17-B607-0BEE478998F0}</Project>
+      <Name>RandomBot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\reference\reference.csproj">
+      <Project>{1833A57C-5F52-43FA-84E3-5EDE2C994D42}</Project>
+      <Name>reference</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>F:\Development\Google\Fanny_Heirdoo\Copy_Fanny.cmd</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A9B6F17D-7136-4AC2-B497-2AE1DB5A26BA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FannyHeirdooBot</RootNamespace>
+    <AssemblyName>Fanny_Heirdoo</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AttackPlanParticipant.cs" />
+    <Compile Include="botDebug.cs" />
+    <Compile Include="BotStrategy.cs" />
+    <Compile Include="AttackPlan.cs" />
+    <Compile Include="Strategy_BackingItUp.cs" />
+    <Compile Include="IBotStrategy.cs" />
+    <Compile Include="Strategy_LastTry.cs" />
+    <Compile Include="PlanetTurn.cs" />
+    <Compile Include="PlanetArmada.cs" />
+    <Compile Include="EditablePlayer.cs" />
+    <Compile Include="Fleet.cs" />
+    <Compile Include="MyBot.cs" />
+    <Compile Include="Planet.cs" />
+    <Compile Include="PlanetaryTravelRoute.cs" />
+    <Compile Include="PlanetTurnPredictions.cs" />
+    <Compile Include="TSM.cs" />
+    <Compile Include="Universe_Predictor.cs" />
+    <Compile Include="Universe_PlanetaryTravelRoute.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BotEnvironment.cs" />
+    <Compile Include="Quadrant.cs" />
+    <Compile Include="Route.cs" />
+    <Compile Include="Universe.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\botDebug\botDebug.csproj">
+      <Project>{E6C870A6-681E-4868-9273-FF5B850A82A0}</Project>
+      <Name>botDebug</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
