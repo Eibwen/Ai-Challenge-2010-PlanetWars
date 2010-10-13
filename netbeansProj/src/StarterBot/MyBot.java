@@ -15,15 +15,24 @@ public class MyBot {
     // http://www.ai-contest.com/resources.
 
     public static void DoTurn(PlanetWars pw) {
-        // (1) If we currently have a fleet in flight, just do nothing.
-        if (pw.MyFleets().size() >= 1) {
+        //"if you're ahead then take it easy, take few risks, and maintain the status quo.
+        // If you're behind, take lots of risk to try to change the status quo"
+        int numFleets = 1;
+        boolean attackMode = false;
+        if (pw.Production(1) >= pw.Production(2)) {
+            numFleets = 1;
+        } else {
+            numFleets = 3;
+        }
+        if (pw.MyFleets().size() >= numFleets) {
             return;
         }
+
         // (2) Find my strongest planet.
         Planet source = null;
         double sourceScore = Double.MIN_VALUE;
         for (Planet p : pw.MyPlanets()) {
-            double score = (double) p.NumShips();
+            double score = (double) p.NumShips() / (1 + p.GrowthRate());
             if (score > sourceScore) {
                 sourceScore = score;
                 source = p;
@@ -33,7 +42,7 @@ public class MyBot {
         Planet dest = null;
         double destScore = Double.MIN_VALUE;
         for (Planet p : pw.NotMyPlanets()) {
-            double score = 1.0 / (1 + p.NumShips());
+            double score = (double) (1 + p.GrowthRate()) / p.NumShips();
             if (score > destScore) {
                 destScore = score;
                 dest = p;
