@@ -1,0 +1,57 @@
+AI STRAGIETIES
+Closest ones?
+
+Second to smallest one, if neutral (assuming opponent will attack lowest neutral one)
+----
+Want high growth rate planets
+----
+Triangulate attacks... get 3 planets distributed around, so can attack quickly
+
+-
+Store a value for Difference from last turn, normalized for growth rate?
+
+
+gaspapassthis
+
+
+
+
+
+Want fastest production of units
+convert distance to (dTurns)
+calculate all planets based on forces+dTurns*rate
+
+
+Recurse between the planets?
+
+
+Do i know what enimy fleets are in the air???
+reinforce high priority when defending anyway
+
+
+====================
+HubBot
+Find groups that are within x distance of each other
+Hubs at first contain neutral and enemy, calculate resistance (oposing forces, and enemy replecation)
+Current base, picks one in hub, which is tasked with getting others in hub
+They all defend each other, any attack is resisted priority 1
+When stable (?) attacks hub close to it
+--But hub is on its own until another one is stable and choose to attempt to spread there
+
+Get planet list
+Calculate all distances?
+If within distance XX, add to hub (??? need algorithm for this)
+--Hub properties:  .Colonized .Ruled .TotalMyShips .TotalNeutralShips .TotalEnemyShips .TotalGrowthRate .Consolidated
+--  .Consolidate() .Attack()
+--Any other properties planets have, constant or not
+==Have A dictionary that stores stats from each turn, so can compare to last... or trends?
+ --Might determine if it will fail, and retreat to nearest hub????
+Each turn find ones that are Colonized, defend, then greedy conquest them?
+Any Ruled ones, Find hub want to colonize, consolidate forces to closest planet to that, then send
+
+
+================
+SwarmBot
+Attack closest planets
+if no neutral or enemy planets are closest (closest 5 planets??)
+-send ships to one of the closest planets that is near enemys -- don't want to send them back and forth tho

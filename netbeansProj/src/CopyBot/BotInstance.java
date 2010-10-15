@@ -6,6 +6,7 @@ package CopyBot;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -25,10 +26,15 @@ public class BotInstance {
     // your own. Check out the tutorials and articles on the contest website at
     // http://www.ai-contest.com/resources.
 
+    PlanetDistances distances = null;
     List<Fleet> counteredFleets = new ArrayList<Fleet>();
     int turnNum = 0;
 
     public void DoTurn(PlanetWars pw) {
+
+        if (distances == null) {
+            distances = new PlanetDistances(pw);
+        }
 
         write("==TURN " + ++turnNum);
 
@@ -39,7 +45,7 @@ public class BotInstance {
 
                     //if target is owned = UNDER ATTACK
                     int NeedShips = en.NumShips();
-                    TreeSet<Forces> forces = Forces.GetForces(pw, en.DestinationPlanet(), en.TurnsRemaining());
+                    TreeSet<Forces> forces = Forces.GetForces(pw, distances, en.DestinationPlanet(), en.TurnsRemaining());
 
                     //TODO take into account ships enroute, and ships on target planet if i own it
 
@@ -74,6 +80,14 @@ public class BotInstance {
                     }
                 } else {
                     write("--Already Countered: " + en.DestinationPlanet());
+                }
+            }
+        } else {
+            //Some sort of basic attack incase they are waiting for me to make the first move
+            for (Planet p : pw.MyPlanets()) {
+                Planet attack = Find.NearestPlanetNotOwned(pw, distances, p.PlanetID());
+                if (attack != null && p.NumShips() > 20) {
+                    pw.IssueOrder(p.PlanetID(), attack.PlanetID(), p.NumShips() - 15);
                 }
             }
         }
@@ -114,6 +128,36 @@ public class BotInstance {
 //            pw.IssueOrder(source, dest, numShips);
 //        }
     }
+
+
+    HashMap<Integer, TargetPlanet> targets = null;
+    public void LoadTargetPlanets(PlanetWars pw){
+        targets = new HashMap<Integer, TargetPlanet>(pw.Planets().size());
+        for (Planet p : pw.Planets()){
+            targets.put(p.PlanetID(), new TargetPlanet(pw,p));
+        }
+        for (Fleet f : pw.Fleets()){
+            targets.get(f.DestinationPlanet()).AddFleet(f);
+        }
+    }
+
+
+//    //Attack Closest... no matter if i can beat it or not
+//    //TODO make it attack the closest that
+//    public void DoTurn(PlanetWars pw) {
+//        if (distances == null) {
+//            distances = new PlanetDistances(pw);
+//        }
+//
+//        for (Planet p : pw.MyPlanets()) {
+//            //Planet attack = Find.NearestPlanetNotOwned(pw, distances, p.PlanetID());
+//            //Planet attack = Find.NearestPlanetNotOwnedWeighted(pw, distances, p.PlanetID());
+//            Planet attack = Find.NearestPlanetNotOwnedCanTake(pw, distances, p.PlanetID(), p.NumShips() - 10);
+//            if (attack != null && p.NumShips() > 20) {
+//                pw.IssueOrder(p.PlanetID(), attack.PlanetID(), p.NumShips() - 15);
+//            }
+//        }
+//    }
     private static String logFile = "D:\\Projects\\CSharp\\!Personal\\GoogleAIChallenge2010\\Bots\\CopyBotLog.txt";
 
     public static void write(String msg) {
