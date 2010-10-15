@@ -7,7 +7,10 @@ package CopyBot;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 /**
@@ -27,7 +30,7 @@ public class BotInstance {
     // http://www.ai-contest.com/resources.
 
     PlanetDistances distances = null;
-    List<Fleet> counteredFleets = new ArrayList<Fleet>();
+//    List<Fleet> counteredFleets = new ArrayList<Fleet>();
     int turnNum = 0;
 
     public void DoTurn(PlanetWars pw) {
@@ -38,14 +41,24 @@ public class BotInstance {
 
         write("==TURN " + ++turnNum);
 
-        if (pw.EnemyFleets().size() > 0) {
-            for (Fleet en : pw.EnemyFleets()) {
-                //Check if i've already countered this force
-                if (!counteredFleets.contains(en)) {
+        Boolean OnlyEnemyControlled = false;
+        if (pw.Production(1) > (pw.Production(2) * 1.75)){
+            //go in for the kill
+            OnlyEnemyControlled = true;
+        }
 
+        LoadTargetPlanets(pw, OnlyEnemyControlled);
+
+        if (pw.EnemyFleets().size() > 0) {
+            for (TargetPlanet tp : targets) {
+
+                write("Planet: " + tp.PlanetId + " needs: " + tp.LongTermForces());
+
+                //Want to go from small to large... skipping over negatives
+                if (tp.LongTermForces() > 0) {
                     //if target is owned = UNDER ATTACK
-                    int NeedShips = en.NumShips();
-                    TreeSet<Forces> forces = Forces.GetForces(pw, distances, en.DestinationPlanet(), en.TurnsRemaining());
+                    int NeedShips = tp.LongTermForces();
+                    TreeSet<Forces> forces = Forces.GetForces(pw, distances, tp.PlanetId, tp.EnemyDistanceAverage());
 
                     //TODO take into account ships enroute, and ships on target planet if i own it
 
@@ -64,7 +77,7 @@ public class BotInstance {
                                     takingShips = NeedShips + 4;
                                 }
 
-                                pw.IssueOrder(f.Planet, en.DestinationPlanet(), takingShips);
+                                pw.IssueOrder(f.Planet, tp.PlanetId, takingShips);
                                 pw.GetPlanet(f.Planet).NumShips(f.AvaliableForces - takingShips);
                                 NeedShips -= takingShips;
                                 SentShips += takingShips;
@@ -72,14 +85,7 @@ public class BotInstance {
                         }
                     }
 
-                    write("Sent: " + SentShips + " to " + en.DestinationPlanet() + ", wanted: " + NeedShips);
-
-                    //TODO is this better or worse??
-                    if (SentShips > en.NumShips()) {
-                        counteredFleets.add(en);
-                    }
-                } else {
-                    write("--Already Countered: " + en.DestinationPlanet());
+                    write("Sent: " + SentShips + " to " + tp.PlanetId + ", wanted: " + NeedShips);
                 }
             }
         } else {
@@ -92,8 +98,6 @@ public class BotInstance {
             }
         }
 
-        //Cleanup coutneredFleets
-        counteredFleets.retainAll(pw.EnemyFleets());
 
 
 
@@ -130,15 +134,24 @@ public class BotInstance {
     }
 
 
-    HashMap<Integer, TargetPlanet> targets = null;
-    public void LoadTargetPlanets(PlanetWars pw){
-        targets = new HashMap<Integer, TargetPlanet>(pw.Planets().size());
+    TreeSet<TargetPlanet> targets = null;
+    public void LoadTargetPlanets(PlanetWars pw, Boolean OnlyEnemyControlled){
+        TreeMap<Integer, TargetPlanet> planetTargets = new TreeMap<Integer, TargetPlanet>();
+        //Add all planets first
         for (Planet p : pw.Planets()){
-            targets.put(p.PlanetID(), new TargetPlanet(pw,p));
+            if (!OnlyEnemyControlled || p.Owner() > 1) {
+                planetTargets.put(p.PlanetID(), new TargetPlanet(pw,p));
+            }
         }
+        //Build up the Fleets for each planet
         for (Fleet f : pw.Fleets()){
-            targets.get(f.DestinationPlanet()).AddFleet(f);
+            if (planetTargets.containsKey(f.DestinationPlanet())) {
+                planetTargets.get(f.DestinationPlanet()).AddFleet(f);
+            }
         }
+
+        targets = new TreeSet<TargetPlanet>();
+        targets.addAll(planetTargets.values());
     }
 
 

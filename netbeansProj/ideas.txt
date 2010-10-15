@@ -55,3 +55,14 @@ SwarmBot
 Attack closest planets
 if no neutral or enemy planets are closest (closest 5 planets??)
 -send ships to one of the closest planets that is near enemys -- don't want to send them back and forth tho
+
+=================
+Dommanance
+Focus on neutral planets... if there is any neutral planet that i can take over, do it
+
+
+================
+Tree
+Build a tree out of the planets
+use that tree as supply lines, request reinforcemnts from parent, send to leafs
+
