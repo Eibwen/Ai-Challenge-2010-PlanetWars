@@ -58,16 +58,22 @@ public class BotInstance {
 
             Planet distanceFrom = home;
 
-            int farthestPlanet = 0;
-            for (Planet p : pw.NeutralPlanets()) {
-                int dist = distances.Distance(distanceFrom, p);
-                if (dist > farthestPlanet) farthestPlanet = dist;
-            }
-            ++farthestPlanet;  //So the farthest one doesn't get multipled by 0
+//            int farthestPlanet = 0;
+//            for (Planet p : pw.NeutralPlanets()) {
+//                int dist = distances.Distance(distanceFrom, p);
+//                if (dist > farthestPlanet) farthestPlanet = dist;
+//            }
+//            ++farthestPlanet;  //So the farthest one doesn't get multipled by 0
 
             for (Planet p : pw.NeutralPlanets()) {
-                int value = (farthestPlanet - distances.Distance(distanceFrom,p)) * p.GrowthRate() - p.NumShips();
-                valueSorted.put(value, p);
+//                int value = (farthestPlanet - distances.Distance(distanceFrom,p)) * p.GrowthRate() - p.NumShips();
+                int distFromMe = distances.Distance(home, p);
+                int distFromThem = distances.Distance(home, p);
+                //Only consider if its closer to me than to them
+                if (distFromMe < distFromThem) {
+                    int value = (distFromThem - distFromMe) * p.GrowthRate() - p.NumShips();
+                    valueSorted.put(value, p);
+                }
             }
 
             Iterator i = valueSorted.values().iterator();
