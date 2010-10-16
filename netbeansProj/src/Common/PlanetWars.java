@@ -245,6 +245,9 @@ public class PlanetWars {
     private int ParseGameState(String s) {
         planets.clear();
         fleets.clear();
+
+        planetAttacks.clear();
+
         int planetID = 0;
         String[] lines = s.split("\n");
         for (int i = 0; i < lines.length; ++i) {
@@ -292,12 +295,21 @@ public class PlanetWars {
                         totalTripLength,
                         turnsRemaining);
                 fleets.add(f);
+
+                AddFleetToPlanetAttack(f);
             } else {
+
+                //Post-build operations
+                for (Planet p : planets) {
+                    p.SetPlanetAttacks(GetPlanetAttacks(p.PlanetID()));
+                }
+
                 return 0;
             }
         }
         return 1;
     }
+
 
     // Loads a map from a text file. The text file contains a description of
     // the starting state of a game. See the project wiki for a description of
@@ -327,4 +339,26 @@ public class PlanetWars {
     // planets and fleets, would we!?
     private ArrayList<Planet> planets;
     private ArrayList<Fleet> fleets;
+
+
+    private HashMap<Integer, TreeSet<Fleet>> planetAttacks = new HashMap<Integer, TreeSet<Fleet>>();
+    private void AddFleetToPlanetAttack(Fleet f) {
+        if (planetAttacks == null) {
+            //This should never happen
+            planetAttacks = new HashMap<Integer, TreeSet<Fleet>>();
+        }
+
+        if (planetAttacks.containsKey(f.DestinationPlanet())) {
+            planetAttacks.get(f.DestinationPlanet()).add(f);
+        }
+        else {
+            TreeSet<Fleet> set = new TreeSet<Fleet>(Fleet.comparatorTurnsRemaining());
+            set.add(f);
+            planetAttacks.put(f.DestinationPlanet(), set);
+        }
+    }
+    public TreeSet<Fleet> GetPlanetAttacks(int planetID) {
+        if (!planetAttacks.containsKey(planetID)) return null;
+        return planetAttacks.get(planetID);
+    }
 }

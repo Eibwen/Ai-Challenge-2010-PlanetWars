@@ -1,5 +1,6 @@
 package StarterBot;
 
+import Common.*;
 import java.util.*;
 
 public class MyBot {

@@ -1,5 +1,7 @@
 package Common;
 
+import java.util.Comparator;
+
 public class Fleet implements Comparable, Cloneable {
     // Initializes a fleet.
 
@@ -73,6 +75,24 @@ public class Fleet implements Comparable, Cloneable {
         Fleet f = (Fleet) o;
         return this.numShips - f.numShips;
     }
+    
+    public static ComparatorShipCount comparatorShipCount() {
+        return new ComparatorShipCount();
+    }
+    public static class ComparatorShipCount implements Comparator<Fleet> {
+        public int compare(Fleet t, Fleet t1) {
+            return t.numShips - t1.numShips;
+        }
+    }
+    public static ComparatorTurnsRemaining comparatorTurnsRemaining() {
+        return new ComparatorTurnsRemaining();
+    }
+    public static class ComparatorTurnsRemaining implements Comparator<Fleet> {
+        public int compare(Fleet t, Fleet t1) {
+            return t.turnsRemaining - t1.turnsRemaining;
+        }
+    }
+
     private int owner;
     private int numShips;
     private int sourcePlanet;

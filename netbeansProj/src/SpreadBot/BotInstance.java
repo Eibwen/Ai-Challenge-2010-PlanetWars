@@ -57,7 +57,7 @@ public class BotInstance {
             }
             TreeMap<Integer, Planet> valueSorted = new TreeMap<Integer, Planet>(Collections.reverseOrder());
 
-            Planet distanceFrom = home;
+//            Planet distanceFrom = home;
 
 //            int farthestPlanet = 0;
 //            for (Planet p : pw.NeutralPlanets()) {
@@ -69,9 +69,9 @@ public class BotInstance {
             for (Planet p : pw.NeutralPlanets()) {
 //                int value = (farthestPlanet - distances.Distance(distanceFrom,p)) * p.GrowthRate() - p.NumShips();
                 int distFromMe = distances.Distance(home, p);
-                int distFromThem = distances.Distance(home, p);
+                int distFromThem = distances.Distance(enemyHome, p);
                 //Only consider if its closer to me than to them
-                if (distFromMe < distFromThem) {
+                if (distFromMe <= distFromThem) {
                     int value = (distFromThem - distFromMe) * p.GrowthRate() - p.NumShips();
                     valueSorted.put(value, p);
                 }

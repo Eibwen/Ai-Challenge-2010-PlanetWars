@@ -1,5 +1,7 @@
 package Common;
 
+import java.util.TreeSet;
+
 public class Planet implements Cloneable {
     // Initializes a planet.
 
@@ -75,5 +77,31 @@ public class Planet implements Cloneable {
 
     public Object clone() {
         return new Planet(this);
+    }
+
+    TreeSet<Fleet> planetAttacks = null;
+    public void SetPlanetAttacks(TreeSet<Fleet> PlanetAttacks) {
+        planetAttacks = PlanetAttacks;
+    }
+    /**
+     * Really a front-end to remind you that the actual function for this is in the PlanetWars object
+     * @return
+     */
+    public boolean BeingAttacked() {
+        return planetAttacks != null;
+    }
+    public Fleet NextAttackedBy(int playerId) {
+        if (planetAttacks == null) return null;
+        for (Fleet f : planetAttacks) {
+            if (f.Owner() == playerId) return f;
+        }
+        return null;
+    }
+    public Fleet NextAttack() {
+        if (planetAttacks == null) return null;
+        return planetAttacks.first();
+    }
+    public TreeSet<Fleet> Attacks() {
+        return planetAttacks;
     }
 }
