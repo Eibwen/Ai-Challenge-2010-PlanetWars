@@ -69,12 +69,22 @@ public class BotInstance extends BotBase {
             OnlyEnemyControlled = true;
         }
 
+        //10 here beats Fanny, 20 beats Andy
+        int AvaliableForcesDown = 10;
+        int MinExtraOnPlanet = 20;
+        int MinLeaveOnPlanet = 15;
+
         for (Planet p : pw.MyPlanets()) {
-            //Planet attack = Find.NearestPlanetNotOwned(pw, distances, p.PlanetID());
-            //Planet attack = Find.NearestPlanetNotOwnedWeighted(pw, distances, p.PlanetID());
-            Planet attack = Find.NearestPlanetNotOwnedCanTake(pw.Planets(), distances, p.PlanetID(), p.NumShips() - 10, OnlyEnemyControlled);
-            if (attack != null && p.NumShips() > 20) {
-                pw.IssueOrder(p.PlanetID(), attack.PlanetID(), p.NumShips() - 15);
+            if (p.BeingAttacked()) {
+
+            }
+            else {
+                //Planet attack = Find.NearestPlanetNotOwned(pw, distances, p.PlanetID());
+                //Planet attack = Find.NearestPlanetNotOwnedWeighted(pw, distances, p.PlanetID());
+                Planet attack = Find.NearestPlanetNotOwnedCanTake(pw.Planets(), distances, p.PlanetID(), p.NumShips() - AvaliableForcesDown, OnlyEnemyControlled);
+                if (attack != null && p.NumShips() > MinExtraOnPlanet) {
+                    pw.IssueOrder(p.PlanetID(), attack.PlanetID(), p.NumShips() - MinLeaveOnPlanet);
+                }
             }
         }
     }
