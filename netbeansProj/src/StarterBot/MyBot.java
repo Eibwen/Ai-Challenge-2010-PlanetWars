@@ -3,7 +3,7 @@ package StarterBot;
 import Common.*;
 import java.util.*;
 
-public class MyBot {
+public class MyBot extends BotBase {
     // The DoTurn function is where your code goes. The PlanetWars object
     // contains the state of the game, including information about all planets
     // and fleets that currently exist. Inside this function, you issue orders
@@ -15,7 +15,7 @@ public class MyBot {
     // your own. Check out the tutorials and articles on the contest website at
     // http://www.ai-contest.com/resources.
 
-    public static void DoTurn(PlanetWars pw) {
+    public void DoTurn(PlanetWars pw) {
         //"if you're ahead then take it easy, take few risks, and maintain the status quo.
         // If you're behind, take lots of risk to try to change the status quo"
         int numFleets = 1;
@@ -54,34 +54,6 @@ public class MyBot {
         if (source != null && dest != null) {
             int numShips = source.NumShips() / 2;
             pw.IssueOrder(source, dest, numShips);
-        }
-    }
-
-    public static void main(String[] args) {
-        String line = "";
-        String message = "";
-        int c;
-        try {
-            while ((c = System.in.read()) >= 0) {
-                switch (c) {
-                    case '\n':
-                        if (line.equals("go")) {
-                            PlanetWars pw = new PlanetWars(message);
-                            DoTurn(pw);
-                            pw.FinishTurn();
-                            message = "";
-                        } else {
-                            message += line + "\n";
-                        }
-                        line = "";
-                        break;
-                    default:
-                        line += (char) c;
-                        break;
-                }
-            }
-        } catch (Exception e) {
-            // Owned.
         }
     }
 }

@@ -18,7 +18,7 @@ import java.util.TreeSet;
  *
  * @author gwalker
  */
-public class BotInstance {
+public class BotInstance extends BotBase {
     // The DoTurn function is where your code goes. The PlanetWars object
     // contains the state of the game, including information about all planets
     // and fleets that currently exist. Inside this function, you issue orders

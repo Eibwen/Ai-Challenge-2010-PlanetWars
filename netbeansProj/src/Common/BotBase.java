@@ -1,16 +1,14 @@
-package CopyBot;
-
-import java.util.*;
+package Common;
 
 import Common.*;
+import java.util.*;
 
-public class MyBot {
-  
-
-    public static void main(String[] args) {
-
-        BotInstance bot = new BotInstance();
-
+/**
+ *
+ * @author mrflippy
+ */
+public abstract class BotBase {
+    public void main(String[] args) {
         String line = "";
         String message = "";
         int c;
@@ -20,7 +18,9 @@ public class MyBot {
                     case '\n':
                         if (line.equals("go")) {
                             PlanetWars pw = new PlanetWars(message);
-                            bot.DoTurn(pw);
+
+                            this.DoTurn(pw);
+
                             pw.FinishTurn();
                             message = "";
                         } else {
@@ -37,5 +37,7 @@ public class MyBot {
             // Owned.
         }
     }
+
+    public abstract void DoTurn(PlanetWars pw);
 }
 

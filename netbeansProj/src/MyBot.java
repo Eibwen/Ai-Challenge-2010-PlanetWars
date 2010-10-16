@@ -10,9 +10,12 @@
 public class MyBot {
 
     public static void main(String[] args) {
-        //StarterBot.MyBot.main(args);
-        //SimpleClosest.MyBot.main(args);
-        //CopyBot.MyBot.main(args);
-        SpreadBot.MyBot.main(args);
+        Common.BotBase bot;
+        //bot = new StarterBot.BotInstance();
+        //bot = new SimpleClosest.BotInstance();
+        //bot = new CopyBot.BotInstance();
+        bot = new SpreadBot.BotInstance();
+
+        bot.main(args);
     }
 }
