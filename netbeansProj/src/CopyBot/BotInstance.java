@@ -157,6 +157,7 @@ public class BotInstance {
 
 //    //Attack Closest... no matter if i can beat it or not
 //    //TODO make it attack the closest that
+//    // problem with this is it just ends all the ships to the planet, then also sends while that fleet is traveling
 //    public void DoTurn(PlanetWars pw) {
 //        if (distances == null) {
 //            distances = new PlanetDistances(pw);

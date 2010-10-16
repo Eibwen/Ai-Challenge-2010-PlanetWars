@@ -11,8 +11,6 @@ Triangulate attacks... get 3 planets distributed around, so can attack quickly
 Store a value for Difference from last turn, normalized for growth rate?
 
 
-gaspapassthis
-
 
 
 
@@ -65,4 +63,12 @@ Focus on neutral planets... if there is any neutral planet that i can take over,
 Tree
 Build a tree out of the planets
 use that tree as supply lines, request reinforcemnts from parent, send to leafs
+
+
+================
+SnipeBot -- these names are fun to come up with
+Variation of CopyBot that is smarter, try to take a planet right after the opponet uses most of their forces to kill the neutral
+Look at their fleets
+Fleet.Ships - DestPlanet.NumShips + GrowthRate * TurnsAhead
+--Ideally TurnsAhead would be 1
 
