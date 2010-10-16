@@ -4,6 +4,8 @@
  */
 package SimpleClosest;
 
+import Common.*;
+
 /**
  *
  * @author gwalker

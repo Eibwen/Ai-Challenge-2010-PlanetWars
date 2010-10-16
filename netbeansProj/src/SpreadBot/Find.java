@@ -4,6 +4,8 @@
  */
 package SpreadBot;
 
+import Common.*;
+
 /**
  *
  * @author gwalker

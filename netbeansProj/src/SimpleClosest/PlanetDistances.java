@@ -4,6 +4,7 @@
  */
 package SimpleClosest;
 
+import Common.*;
 import java.util.HashMap;
 
 /**

@@ -4,6 +4,7 @@
  */
 package CopyBot;
 
+import Common.*;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;

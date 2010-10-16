@@ -1,4 +1,4 @@
-package CopyBot;
+package Common;
 
 public class Planet implements Cloneable {
     // Initializes a planet.

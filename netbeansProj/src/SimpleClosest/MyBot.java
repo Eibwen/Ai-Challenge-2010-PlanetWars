@@ -1,5 +1,6 @@
 package SimpleClosest;
 
+import Common.*;
 import java.util.*;
 
 public class MyBot {

@@ -1,4 +1,4 @@
-package StarterBot;
+package Common;
 
 // Contestants do not need to worry about anything in this file. This is just
 // helper code that does the boring stuff for you, so you can focus on the

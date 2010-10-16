@@ -4,6 +4,7 @@
  */
 package CopyBot;
 
+import Common.*;
 import java.util.HashMap;
 
 /**

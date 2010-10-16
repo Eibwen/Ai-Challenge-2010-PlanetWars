@@ -2,6 +2,8 @@ package CopyBot;
 
 import java.util.*;
 
+import Common.*;
+
 public class MyBot {
   
 

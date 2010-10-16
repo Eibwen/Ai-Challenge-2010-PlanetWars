@@ -1,4 +1,4 @@
-package CopyBot;
+package Common;
 
 public class Fleet implements Comparable, Cloneable {
     // Initializes a fleet.

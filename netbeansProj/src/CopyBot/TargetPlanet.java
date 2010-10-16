@@ -4,6 +4,8 @@
  */
 package CopyBot;
 
+import Common.*;
+
 /**
  *
  * @author gwalker
