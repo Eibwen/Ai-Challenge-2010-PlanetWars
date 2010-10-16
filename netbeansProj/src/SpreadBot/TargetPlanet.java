@@ -12,7 +12,7 @@ import Common.*;
  */
 public class TargetPlanet {
 
-    public TargetPlanet(PlanetWars pw, Planet p){
+    public TargetPlanet(Planet p){
         if (p.Owner() == 0) NeutralForces = p.NumShips();
         else if (p.Owner() == 1) MyForces = p.NumShips();
         else EnemyForces = p.NumShips();

@@ -12,7 +12,7 @@ import Common.*;
  */
 public class TargetPlanet implements Comparable {
 
-    public TargetPlanet(PlanetWars pw, Planet p){
+    public TargetPlanet(Planet p){
         PlanetId = p.PlanetID();
         if (p.Owner() == 0) NeutralForces = p.NumShips();
         else if (p.Owner() == 1) MyForces = p.NumShips();

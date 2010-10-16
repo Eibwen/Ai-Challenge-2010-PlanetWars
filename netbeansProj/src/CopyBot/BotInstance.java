@@ -92,7 +92,7 @@ public class BotInstance {
         } else {
             //Some sort of basic attack incase they are waiting for me to make the first move
             for (Planet p : pw.MyPlanets()) {
-                Planet attack = Find.NearestPlanetNotOwned(pw, distances, p.PlanetID());
+                Planet attack = Find.NearestPlanetNotOwned(pw.Planets(), distances, p.PlanetID());
                 if (attack != null && p.NumShips() > 20) {
                     pw.IssueOrder(p.PlanetID(), attack.PlanetID(), p.NumShips() - 15);
                 }
@@ -141,7 +141,7 @@ public class BotInstance {
         //Add all planets first
         for (Planet p : pw.Planets()){
             if (!OnlyEnemyControlled || p.Owner() > 1) {
-                planetTargets.put(p.PlanetID(), new TargetPlanet(pw,p));
+                planetTargets.put(p.PlanetID(), new TargetPlanet(p));
             }
         }
         //Build up the Fleets for each planet

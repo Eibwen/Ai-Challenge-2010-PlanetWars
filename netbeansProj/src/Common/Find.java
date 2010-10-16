@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package SimpleClosest;
+package Common;
 
-import Common.*;
 import java.util.Collection;
 
 /**
@@ -13,10 +12,10 @@ import java.util.Collection;
  */
 public class Find {
 
-    public static Planet NearestPlanetNotOwned(PlanetWars pw, PlanetDistances distances, int planetId) {
+    public static Planet NearestPlanetNotOwned(Collection<Planet> pw, PlanetDistances distances, int planetId) {
         Planet closest = null;
         int closeDistance = 1000;
-        for (Planet p : pw.Planets()) {
+        for (Planet p : pw) {
             if (p.Owner() != 1) {
                 int distance = distances.Distance(p.PlanetID(), planetId);
                 if (distance < closeDistance) {
@@ -27,11 +26,11 @@ public class Find {
         }
         return closest;
     }
-    
-     public static Planet NearestPlanetNotOwnedWeighted(PlanetWars pw, PlanetDistances distances, int planetId) {
+
+     public static Planet NearestPlanetNotOwnedWeighted(Collection<Planet> pw, PlanetDistances distances, int planetId) {
         Planet closest = null;
         int closeDistance = 1000;
-        for (Planet p : pw.Planets()) {
+        for (Planet p : pw) {
             if (p.Owner() != 1) {
                 int distance = distances.Distance(p.PlanetID(), planetId);
                 distance += p.NumShips() / p.GrowthRate();

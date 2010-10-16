@@ -141,7 +141,7 @@ public class BotInstance {
         } else {
             //Some sort of basic attack incase they are waiting for me to make the first move
             for (Planet p : pw.MyPlanets()) {
-                Planet attack = Find.NearestPlanetNotOwned(pw, distances, p.PlanetID());
+                Planet attack = Find.NearestPlanetNotOwned(pw.Planets(), distances, p.PlanetID());
                 if (attack != null && p.NumShips() > 20) {
                     pw.IssueOrder(p.PlanetID(), attack.PlanetID(), p.NumShips() - 15);
                 }
@@ -190,7 +190,7 @@ public class BotInstance {
     public void LoadTargetPlanets(PlanetWars pw){
         targets = new HashMap<Integer, TargetPlanet>(pw.Planets().size());
         for (Planet p : pw.Planets()){
-            targets.put(p.PlanetID(), new TargetPlanet(pw,p));
+            targets.put(p.PlanetID(), new TargetPlanet(p));
         }
         for (Fleet f : pw.Fleets()){
             targets.get(f.DestinationPlanet()).AddFleet(f);

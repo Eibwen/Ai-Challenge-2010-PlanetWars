@@ -12,7 +12,7 @@ public class MyBot {
     public static void main(String[] args) {
         //StarterBot.MyBot.main(args);
         //SimpleClosest.MyBot.main(args);
-        CopyBot.MyBot.main(args);
-        //SpreadBot.MyBot.main(args);
+        //CopyBot.MyBot.main(args);
+        SpreadBot.MyBot.main(args);
     }
 }

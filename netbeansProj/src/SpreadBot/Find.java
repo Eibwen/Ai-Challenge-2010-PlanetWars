@@ -5,6 +5,7 @@
 package SpreadBot;
 
 import Common.*;
+import java.util.Collection;
 
 /**
  *
@@ -12,10 +13,10 @@ import Common.*;
  */
 public class Find {
 
-    public static Planet NearestPlanetNotOwned(PlanetWars pw, PlanetDistances distances, int planetId) {
+    public static Planet NearestPlanetNotOwned(Collection<Planet> pw, PlanetDistances distances, int planetId) {
         Planet closest = null;
         int closeDistance = 1000;
-        for (Planet p : pw.Planets()) {
+        for (Planet p : pw) {
             if (p.Owner() != 1) {
                 int distance = distances.Distance(p.PlanetID(), planetId);
                 if (distance < closeDistance) {
@@ -26,11 +27,11 @@ public class Find {
         }
         return closest;
     }
-    
-     public static Planet NearestPlanetNotOwnedWeighted(PlanetWars pw, PlanetDistances distances, int planetId) {
+
+     public static Planet NearestPlanetNotOwnedWeighted(Collection<Planet> pw, PlanetDistances distances, int planetId) {
         Planet closest = null;
         int closeDistance = 1000;
-        for (Planet p : pw.Planets()) {
+        for (Planet p : pw) {
             if (p.Owner() != 1) {
                 int distance = distances.Distance(p.PlanetID(), planetId);
                 distance += p.NumShips() / p.GrowthRate();
@@ -43,11 +44,17 @@ public class Find {
         return closest;
     }
 
-    public static Planet NearestPlanetNotOwnedCanTake(PlanetWars pw, PlanetDistances distances, int planetId, int avaliableForces) {
+    public static Planet NearestPlanetNotOwnedCanTake(Collection<Planet> planets, PlanetDistances distances, int planetId, int avaliableForces) {
+        return NearestPlanetNotOwnedCanTake(planets, distances, planetId, avaliableForces, false);
+    }
+
+    public static Planet NearestPlanetNotOwnedCanTake(Collection<Planet> planets, PlanetDistances distances, int planetId, int avaliableForces, boolean OnlyEnemyControlled) {
         Planet closest = null;
         int closeDistance = 1000;
-        for (Planet p : pw.Planets()) {
-            if (p.Owner() != 1) {
+        for (Planet p : planets) {
+            if (p.Owner() != 1
+                && (!OnlyEnemyControlled || p.Owner() == 2)) {
+
                 if (avaliableForces > p.NumShips()) {
                     int distance = distances.Distance(p.PlanetID(), planetId);
                     if (distance < closeDistance) {

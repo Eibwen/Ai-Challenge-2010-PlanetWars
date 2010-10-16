@@ -40,7 +40,7 @@ public class BotInstance {
         //Add all planets first
         for (Planet p : pw.Planets()){
             if (!OnlyEnemyControlled || p.Owner() > 1) {
-                planetTargets.put(p.PlanetID(), new TargetPlanet(pw,p));
+                planetTargets.put(p.PlanetID(), new TargetPlanet(p));
             }
         }
         //Build up the Fleets for each planet
