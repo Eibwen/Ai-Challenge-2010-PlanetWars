@@ -176,6 +176,7 @@ public class PlanetWars {
         System.out.println("" + source.PlanetID() + " " + dest.PlanetID()
                 + " " + numShips);
         System.out.flush();
+        source.RemoveShips(numShips);
     }
 
     // Sends the game engine a message to let it know that we're done sending
@@ -300,9 +301,7 @@ public class PlanetWars {
             } else {
 
                 //Post-build operations
-                for (Planet p : planets) {
-                    p.SetPlanetAttacks(GetPlanetAttacks(p.PlanetID()));
-                }
+                SetPlanetAttacks();
 
                 return 0;
             }
@@ -360,5 +359,14 @@ public class PlanetWars {
     public TreeSet<Fleet> GetPlanetAttacks(int planetID) {
         if (!planetAttacks.containsKey(planetID)) return null;
         return planetAttacks.get(planetID);
+    }
+    private void SetPlanetAttacks() {
+        for (Planet p : planets) {
+            p.SetPlanetAttacks(GetPlanetAttacks(p.PlanetID()));
+        }
+    }
+
+    public int EnemyAttackTargets() {
+
     }
 }

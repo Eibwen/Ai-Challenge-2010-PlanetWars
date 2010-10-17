@@ -72,3 +72,10 @@ Look at their fleets
 Fleet.Ships - DestPlanet.NumShips + GrowthRate * TurnsAhead
 --Ideally TurnsAhead would be 1
 
+
+================
+CenterPlanet -- Hub distribution
+Go after center planet 100%
+can attack all planets equally from that base
+-Could always send extras to it, unless being attacked
+

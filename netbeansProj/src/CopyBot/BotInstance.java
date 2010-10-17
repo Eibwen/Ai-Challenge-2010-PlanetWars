@@ -5,12 +5,6 @@
 package CopyBot;
 
 import Common.*;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -173,20 +167,4 @@ public class BotInstance extends BotBase {
 //            }
 //        }
 //    }
-    private static String logFile = "D:\\Projects\\CSharp\\!Personal\\GoogleAIChallenge2010\\Bots\\CopyBotLog.txt";
-
-    public static void write(String msg) {
-        write(logFile, msg);
-    }
-
-    public static void write(String file, String msg) {
-        try {
-            FileWriter aWriter = new FileWriter(file, true);
-            aWriter.write(msg
-                    + System.getProperty("line.separator"));
-            aWriter.flush();
-            aWriter.close();
-        } catch (Exception e) {
-        }
-    }
 }

@@ -83,7 +83,6 @@ public class BotInstance extends BotBase {
                 if ((home.NumShips() - 10) > toAttack.NumShips()) {
                     int sendingShips = toAttack.NumShips() + 1;
                     pw.IssueOrder(home, toAttack, sendingShips);
-                    home.NumShips(home.NumShips() - sendingShips);
                 }
             }
 
@@ -94,6 +93,7 @@ public class BotInstance extends BotBase {
 
         write("==TURN " + ++turnNum);
 
+        //COPY BOT CODE:
         if (pw.EnemyFleets().size() > 0) {
             for (Fleet en : pw.EnemyFleets()) {
                 //Check if i've already countered this force
