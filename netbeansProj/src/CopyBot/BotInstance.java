@@ -37,52 +37,22 @@ public class BotInstance extends BotBase {
         write("==TURN " + ++turnNum);
 
         Boolean OnlyEnemyControlled = false;
-        if (pw.Production(1) > (pw.Production(2) * 1.75)){
+        if (pw.NumShips(1) > (pw.NumShips(2) * 1.5)){
             //go in for the kill
             OnlyEnemyControlled = true;
         }
 
-        LoadTargetPlanets(pw, OnlyEnemyControlled);
-
         if (pw.EnemyFleets().size() > 0) {
-            for (TargetPlanet tp : targets) {
+            //TODO have a statement to keep a strategy going by basing it on the last 5 turns or something
 
-                write("Planet: " + tp.PlanetId + " needs: " + tp.LongTermForces());
-
-                //Want to go from small to large... skipping over negatives
-                if (tp.LongTermForces() > 0) {
-                    //if target is owned = UNDER ATTACK
-                    int NeedShips = tp.LongTermForces();
-                    TreeSet<Forces> forces = Forces.GetForces(pw, distances, tp.PlanetId, tp.EnemyDistanceAverage());
-
-                    //TODO take into account ships enroute, and ships on target planet if i own it
-
-                    int SentShips = 0;
-
-                    for (Forces f : forces) {
-                        if (NeedShips > 0) {
-
-                            int takingShips = f.AvalibleLeaveDefendingForce();
-                            if (takingShips > 0) {
-                                ////write("Planet " + f.Planet + ": TakingShips: " + takingShips + " " + f.AvaliableForces + "  ");
-
-                                //If this one finishes it off
-                                if (NeedShips < takingShips) {
-                                    //TODO NEED SHIP PADDING
-                                    takingShips = NeedShips + 4;
-                                }
-
-                                pw.IssueOrder(f.Planet, tp.PlanetId, takingShips);
-                                pw.GetPlanet(f.Planet).NumShips(f.AvaliableForces - takingShips);
-                                NeedShips -= takingShips;
-                                SentShips += takingShips;
-                            }
-                        }
-                    }
-
-                    write("Sent: " + SentShips + " to " + tp.PlanetId + ", wanted: " + NeedShips);
-                }
+            if (pw.FleetAttackTargets(2) < 3) {
+                //I believe that CopyBot attack is a good strategy when they are attacking few targets
+                SendCopyBotAttacks(pw, true, OnlyEnemyControlled);
             }
+            //else? -- follow up with a strategy to combat multiple attacks better
+
+            //Then some other strategy that will work do something else...
+
         } else {
             //Some sort of basic attack incase they are waiting for me to make the first move
             for (Planet p : pw.MyPlanets()) {
@@ -126,6 +96,55 @@ public class BotInstance extends BotBase {
 //            int numShips = source.NumShips() / 2;
 //            pw.IssueOrder(source, dest, numShips);
 //        }
+    }
+
+    public void SendCopyBotAttacks(PlanetWars pw, boolean rebuildTargets, boolean OnlyEnemyControlled) {
+
+        //TODO need to NOT send ships if being attacked, unless are 1.5*LongTermAttacking force
+        //TODO prioritize targets better
+
+        if (rebuildTargets || targets == null) {
+            LoadTargetPlanets(pw, OnlyEnemyControlled);
+        }
+        
+        for (TargetPlanet tp : targets) {
+
+            write("Planet: " + tp.PlanetId + " needs: " + tp.LongTermForces());
+
+            //Want to go from small to large... skipping over negatives
+            if (tp.LongTermForces() > 0) {
+                //if target is owned = UNDER ATTACK
+                int NeedShips = tp.LongTermForces();
+                TreeSet<Forces> forces = Forces.GetForces(pw, distances, tp.PlanetId, tp.EnemyDistanceAverage());
+
+                //TODO take into account ships enroute, and ships on target planet if i own it
+
+                int SentShips = 0;
+
+                for (Forces f : forces) {
+                    if (NeedShips > 0) {
+
+                        int takingShips = f.AvalibleLeaveDefendingForce();
+                        if (takingShips > 0) {
+                            ////write("Planet " + f.Planet + ": TakingShips: " + takingShips + " " + f.AvaliableForces + "  ");
+
+                            //If this one finishes it off
+                            if (NeedShips < takingShips) {
+                                //TODO NEED SHIP PADDING
+                                takingShips = NeedShips + 4;
+                            }
+
+                            pw.IssueOrder(f.Planet, tp.PlanetId, takingShips);
+                            pw.GetPlanet(f.Planet).NumShips(f.AvaliableForces - takingShips);
+                            NeedShips -= takingShips;
+                            SentShips += takingShips;
+                        }
+                    }
+                }
+
+                write("Sent: " + SentShips + " to " + tp.PlanetId + ", wanted: " + NeedShips);
+            }
+        }
     }
 
 

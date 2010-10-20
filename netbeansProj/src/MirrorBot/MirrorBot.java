@@ -83,6 +83,8 @@ public class MirrorBot extends BotBase {
                 fleets.remove(o);
             }
 
+            write("Fleet count: " + fleets.size() + " -- mirrored: " + mirroredFleets.size());
+
             for (Fleet f : fleets) {
                     boolean handled = false;
 
@@ -94,8 +96,9 @@ public class MirrorBot extends BotBase {
                     //Don't trade fleets between mirrored planets:
                     if (src.PlanetID() != f.DestinationPlanet()) {
 
-                        write("Ships: " + src.NumShips() + " - " + f.NumShips());
-                        if (src.NumShips() >= f.NumShips()) {
+                        write("Ships: " + src.PlanetID() + " -- " + src.NumShips() + " - " + f.NumShips());
+                        if (src.NumShips() > f.NumShips() &&
+                            src.Owner() == 1) {
                             pw.IssueOrder(src, dest, f.NumShips());
                             //src.NumShips(src.NumShips() - f.NumShips());
                             handled = true;

@@ -1,4 +1,4 @@
-AI STRAGIETIES
+AI STRATEGIES
 Closest ones?
 
 Second to smallest one, if neutral (assuming opponent will attack lowest neutral one)
@@ -75,7 +75,46 @@ Fleet.Ships - DestPlanet.NumShips + GrowthRate * TurnsAhead
 
 ================
 CenterPlanet -- Hub distribution
-Go after center planet 100%
+Go after center planet 100% (find 4 most centered planets, take the one closest to current planet)
 can attack all planets equally from that base
 -Could always send extras to it, unless being attacked
 
+
+=================
+SuperFleet sub strategy
+If a planet gets say, 1.2*LargestNeutralPlanetShipNum, have that send that full fleet around to neutral planets?
+And same sorta thing with the enemy planets, but with 1.5* those
+
+
+
+[AdvancedCounter Attack]
+Any fleet where i can get something to arrive within X turns after they do
+-it is good because it could run first, and if it is possible then total win, otherwise use normal strategies
+
+
+
+
+Use the knapsack thing to see when i can take over all their planets?
+--does it take into account the travel distance + growth?
+
+
+
+TreeBot expanded
+capture as many as possible at start (knapsack)
+then limit each leaf to 1 subleaf
+all leafs protect it's parent, and reinforce leaf
+
+
+#################
+Thoughts:
+Thinking of it as a tree, need to decide when two planets should work together to take one planet, or each work on taking their own planet
+
+
+(what??)
+Most bots are going to be spreading out from around hte central point
+
+
+Fastest Production:
+Owning the most planets for the longest
+taking off their planets efficently
+Reducing their production abilities

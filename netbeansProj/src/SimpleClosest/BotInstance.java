@@ -64,7 +64,7 @@ public class BotInstance extends BotBase {
         }
 
         Boolean OnlyEnemyControlled = false;
-        if (pw.Production(1) > (pw.Production(2) * 1.75)){
+        if (pw.NumShips(1) > (pw.NumShips(2) * 1.75)){
             //go in for the kill
             OnlyEnemyControlled = true;
         }

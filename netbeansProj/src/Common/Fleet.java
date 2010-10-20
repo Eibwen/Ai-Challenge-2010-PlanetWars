@@ -10,13 +10,15 @@ public class Fleet implements Comparable, Cloneable {
             int sourcePlanet,
             int destinationPlanet,
             int totalTripLength,
-            int turnsRemaining) {
+            int turnsRemaining,
+            int turnNum) {
         this.owner = owner;
         this.numShips = numShips;
         this.sourcePlanet = sourcePlanet;
         this.destinationPlanet = destinationPlanet;
         this.totalTripLength = totalTripLength;
         this.turnsRemaining = turnsRemaining;
+        this.turnNumber = turnNum;
     }
 
     // Initializes a fleet.
@@ -28,6 +30,7 @@ public class Fleet implements Comparable, Cloneable {
         this.destinationPlanet = -1;
         this.totalTripLength = -1;
         this.turnsRemaining = -1;
+        this.turnNumber = -1;
     }
 
     // Accessors and simple modification functions. These should be mostly
@@ -54,6 +57,14 @@ public class Fleet implements Comparable, Cloneable {
 
     public int TurnsRemaining() {
         return turnsRemaining;
+    }
+
+    public int ArivialTurn() {
+        return turnsRemaining + turnNumber;
+    }
+
+    public int TurnsRemainingFuture(int turnNum) {
+        return turnsRemaining - (turnNum - turnNumber);
     }
 
     public void RemoveShips(int amount) {
@@ -92,6 +103,14 @@ public class Fleet implements Comparable, Cloneable {
             return t.turnsRemaining - t1.turnsRemaining;
         }
     }
+    public static ComparatorTurnsRemainingRealitive comparatorTurnsRemainingRealitive() {
+        return new ComparatorTurnsRemainingRealitive();
+    }
+    public static class ComparatorTurnsRemainingRealitive implements Comparator<Fleet> {
+        public int compare(Fleet t, Fleet t1) {
+            return (t.turnsRemaining + t.turnNumber) - (t1.turnsRemaining + t1.turnNumber);
+        }
+    }
 
     private int owner;
     private int numShips;
@@ -99,6 +118,7 @@ public class Fleet implements Comparable, Cloneable {
     private int destinationPlanet;
     private int totalTripLength;
     private int turnsRemaining;
+    private int turnNumber;
 
     private Fleet(Fleet _f) {
         owner = _f.owner;
@@ -107,6 +127,7 @@ public class Fleet implements Comparable, Cloneable {
         destinationPlanet = _f.destinationPlanet;
         totalTripLength = _f.totalTripLength;
         turnsRemaining = _f.turnsRemaining;
+        turnNumber = _f.turnNumber;
     }
 
     @Override
@@ -128,8 +149,8 @@ public class Fleet implements Comparable, Cloneable {
                 && this.numShips == otherFleet.numShips
                 && this.sourcePlanet == otherFleet.sourcePlanet
                 && this.destinationPlanet == otherFleet.destinationPlanet
-                && this.totalTripLength == otherFleet.totalTripLength
-                && this.turnsRemaining == otherFleet.turnsRemaining);
+                && this.ArivialTurn() == otherFleet.ArivialTurn()
+                && this.totalTripLength == otherFleet.totalTripLength);
     }
 
     @Override
@@ -141,7 +162,7 @@ public class Fleet implements Comparable, Cloneable {
         hash = hash * 23 + this.sourcePlanet;
         hash = hash * 23 + this.destinationPlanet;
         hash = hash * 23 + this.totalTripLength;
-        hash = hash * 23 + this.turnsRemaining;
+        hash = hash * 23 + this.ArivialTurn();
 
 //        hash = hash * 23 ^ this.owner;
 //        hash = hash * 23 ^ this.numShips;

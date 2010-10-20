@@ -20,40 +20,47 @@ public class MyBot extends BotBase {
         // If you're behind, take lots of risk to try to change the status quo"
         int numFleets = 1;
         boolean attackMode = false;
-        if (pw.Production(1) >= pw.Production(2)) {
+        if (pw.NumShips(1) >= pw.NumShips(2)) {
             numFleets = 1;
         } else {
-            numFleets = 3;
+            numFleets = 2;
         }
+
+        int planetCount = pw.MyPlanets().size();
+        numFleets = numFleets * planetCount;
+
         if (pw.MyFleets().size() >= numFleets) {
             return;
         }
 
-        // (2) Find my strongest planet.
-        Planet source = null;
-        double sourceScore = Double.MIN_VALUE;
-        for (Planet p : pw.MyPlanets()) {
-            double score = (double) p.NumShips() / (1 + p.GrowthRate());
-            if (score > sourceScore) {
-                sourceScore = score;
-                source = p;
+        for (int i = 0; i < planetCount; ++i) {
+
+            // (2) Find my strongest planet.
+            Planet source = null;
+            double sourceScore = Double.MIN_VALUE;
+            for (Planet p : pw.MyPlanets()) {
+                double score = (double) p.NumShips() / (1 + p.GrowthRate());
+                if (score > sourceScore) {
+                    sourceScore = score;
+                    source = p;
+                }
             }
-        }
-        // (3) Find the weakest enemy or neutral planet.
-        Planet dest = null;
-        double destScore = Double.MIN_VALUE;
-        for (Planet p : pw.NotMyPlanets()) {
-            double score = (double) (1 + p.GrowthRate()) / p.NumShips();
-            if (score > destScore) {
-                destScore = score;
-                dest = p;
+            // (3) Find the weakest enemy or neutral planet.
+            Planet dest = null;
+            double destScore = Double.MIN_VALUE;
+            for (Planet p : pw.NotMyPlanets()) {
+                double score = (double) (1 + p.GrowthRate()) / p.NumShips();
+                if (score > destScore) {
+                    destScore = score;
+                    dest = p;
+                }
             }
-        }
-        // (4) Send half the ships from my strongest planet to the weakest
-        // planet that I do not own.
-        if (source != null && dest != null) {
-            int numShips = source.NumShips() / 2;
-            pw.IssueOrder(source, dest, numShips);
+            // (4) Send half the ships from my strongest planet to the weakest
+            // planet that I do not own.
+            if (source != null && dest != null) {
+                int numShips = source.NumShips() / 2;
+                pw.IssueOrder(source, dest, numShips);
+            }
         }
     }
 }

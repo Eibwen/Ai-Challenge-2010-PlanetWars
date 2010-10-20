@@ -184,6 +184,7 @@ public class PlanetWars {
     public void FinishTurn() {
         System.out.println("go");
         System.out.flush();
+        TurnNumIncrease();
     }
 
     // Returns true if the named player owns at least one planet or fleet.
@@ -294,7 +295,8 @@ public class PlanetWars {
                         source,
                         destination,
                         totalTripLength,
-                        turnsRemaining);
+                        turnsRemaining,
+                        turnNum);
                 fleets.add(f);
 
                 AddFleetToPlanetAttack(f);
@@ -366,7 +368,43 @@ public class PlanetWars {
         }
     }
 
-    public int EnemyAttackTargets() {
+    /**
+     * Returns a list of PlanetIDs that the specified player is sending ships tonding ships to
+     *
+     * @param playerID
+     * @return
+     */
+    public List<Integer> FleetTargets(int playerID) {
+        List<Integer> targetPlanets = new ArrayList<Integer>();
+        for (Fleet f : fleets) {
+            if (f.Owner() == playerID) {
+                //Enemy Fleet
+                if (targetPlanets.contains(f.DestinationPlanet())) {
+                    targetPlanets.add(f.DestinationPlanet());
+                }
+            }
+        }
+        return targetPlanets;
+    }
 
+    public int FleetAttackTargets(int playerID) {
+        List<Integer> targetPlanets = FleetTargets(playerID);
+
+        int count = 0;
+        for (Integer i : targetPlanets) {
+            if (playerID != planets.get(i).Owner()) {
+                ++count;
+            }
+        }
+
+        return count;
+    }
+
+    static int turnNum = 0;
+    public int TurnNum() {
+        return turnNum;
+    }
+    private void TurnNumIncrease() {
+        ++turnNum;
     }
 }
